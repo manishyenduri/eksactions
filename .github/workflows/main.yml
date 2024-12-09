@@ -29,8 +29,8 @@ jobs:
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
-        aws-access-key-id: AKIA5YRJNZPVWWDVDA2V
-        aws-secret-access-key: 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
+        aws-access-key-id: ${{ secrets.ACCESS_KEY }}
+        aws-secret-access-key:  ${{ secrets.SECRET_KEY }}
         aws-region: ap-south-1
 
     # Step 5: Update Kubernetes Configuration and Apply Deployment
