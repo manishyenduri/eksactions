@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main  # Trigger workflow on pushes to the main branch
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
     # Step 1: Checkout the repository
     - name: Checkout Code
@@ -23,18 +25,16 @@ jobs:
         docker tag manishyenduri/my-app:latest manishyenduri/my-app:${{ github.sha }}
         docker push manishyenduri/my-app:${{ github.sha }}
 
-    # Step 4: Update Kubernetes Deployment
-    - name: Deploy to EKS
+    # Step 4: Configure AWS Credentials for EKS
+    - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
-        AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
-        AWS_REGION: ap-south-1
+        aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
+        aws-region: ap-south-1
+
+    # Step 5: Update Kubernetes Configuration and Apply Deployment
+    - name: Configure kubectl and Apply Deployment
       run: |
-        aws configure
         aws eks update-kubeconfig --name bevel --region ap-south-1
-#        kubectl set image deployment/<DEPLOYMENT_NAME> test=manishyenduri/my-app:${{ github.sha }}
-#        kubectl rollout status deployment/<DEPLOYMENT_NAME>
-    - name: Apply Kubernetes Deployment
-      run: |
         kubectl apply -f deployment.yaml
