@@ -26,12 +26,12 @@ jobs:
         docker push manishyenduri/my-app:${{ github.sha }}
 
     # Step 4: Configure AWS Credentials for EKS
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        aws-access-key-id: ${{ secrets.ACCESS_KEY }}
-        aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
-        aws-region: ap-south-1
+   - name: Configure AWS Credentials
+     uses: aws-actions/configure-aws-credentials@v4
+     with:
+       aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
+       aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
+       aws-region: ap-south-1
 
     # Step 5: Update Kubernetes Configuration and Apply Deployment
     - name: Configure kubectl and Apply Deployment
