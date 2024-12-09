@@ -26,8 +26,8 @@ jobs:
     # Step 4: Update Kubernetes Deployment
     - name: Deploy to EKS
       env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+        AWS_ACCESS_KEY_ID: AKIA5YRJNZPVY2MPQEXD
+        AWS_SECRET_ACCESS_KEY: 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
         AWS_REGION: ap-south-1
       run: |
         aws configure
