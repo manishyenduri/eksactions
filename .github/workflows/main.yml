@@ -30,6 +30,7 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
         AWS_REGION: ap-south-1
       run: |
+        aws configure
         aws eks update-kubeconfig --name bevel --region ap-south-1
 #        kubectl set image deployment/<DEPLOYMENT_NAME> test=manishyenduri/my-app:${{ github.sha }}
 #        kubectl rollout status deployment/<DEPLOYMENT_NAME>
