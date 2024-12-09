@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app  # Name of the deployment
+  namespace: default  # Kubernetes namespace (default is commonly used)
+spec:
+  replicas: 2  # Number of pod replicas
+  selector:
+    matchLabels:
+      app: my-app  # Label to match the pods
+  template:
+    metadata:
+      labels:
+        app: my-app  # Label for the pods
+    spec:
+      containers:
+      - name: my-app  # Name of the container
+        image: <dockerhub-username>/my-app:latest  # Replace with your Docker Hub image
+        ports:
+        - containerPort: 80  # Container port
+        env:  # Optional environment variables
+        - name: ENVIRONMENT
+          value: "production"
