@@ -1,0 +1,38 @@
+name: Build and Deploy to EKS
+
+on:
+  push:
+    branches:
+      - main  # Trigger workflow on pushes to the main branch
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    # Step 1: Checkout the repository
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    # Step 2: Log in to Docker Hub
+    - name: Log in to Docker Hub
+      run: echo "Manish@12" | docker login -u "manishyenduri" --password-stdin
+
+    # Step 3: Build and Push Docker Image to Docker Hub
+    - name: Build and Push Docker Image
+      run: |
+        docker build -t manishyenduri/my-app:latest .
+        docker tag manishyenduri/my-app:latest manishyenduri/my-app:${{ github.sha }}
+        docker push manishyenduri/my-app:${{ github.sha }}
+
+    # Step 4: Update Kubernetes Deployment
+    - name: Deploy to EKS
+      env:
+        AWS_ACCESS_KEY_ID: AKIA5YRJNZPV6S6MT742
+        AWS_SECRET_ACCESS_KEY: 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
+        AWS_REGION: ap-south-1
+      run: |
+        aws eks update-kubeconfig --name bevel --region ap-south-1
+#        kubectl set image deployment/<DEPLOYMENT_NAME> test=manishyenduri/my-app:${{ github.sha }}
+#        kubectl rollout status deployment/<DEPLOYMENT_NAME>
+    - name: Apply Kubernetes Deployment
+       run: |
+        kubectl apply -f deployment.yaml
