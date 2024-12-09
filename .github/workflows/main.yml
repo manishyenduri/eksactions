@@ -26,8 +26,8 @@ jobs:
     # Step 4: Update Kubernetes Deployment
     - name: Deploy to EKS
       env:
-        AWS_ACCESS_KEY_ID: AKIA5YRJNZPV6S6MT742
-        AWS_SECRET_ACCESS_KEY: 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
+        AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
         AWS_REGION: ap-south-1
       run: |
         aws eks update-kubeconfig --name bevel --region ap-south-1
