@@ -26,6 +26,7 @@ jobs:
     # Step 4: Update Kubernetes Deployment
     - name: Deploy to EKS
       uses: aws-actions/configure-aws-credentials@v4
+      with:
         AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
         AWS_REGION: ap-south-1
